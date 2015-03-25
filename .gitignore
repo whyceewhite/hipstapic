@@ -1,0 +1,36 @@
+# Eclipse #
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+.classpath
+.project
+.settings/
+.externalToolBuilders/
+
+# IntelliJ #
+*.iml
+.idea/
+*.ipr
+*.iws
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+com_crashlytics_export_strings.xml
+
+# Mac #
+.DS_Store
+
+# Maven #
+target/
+
+# Node.js #
+node_modules/
+npm-debug.log
+
+# Java #
+*.class
+*.jar
+*.war
+*.ear

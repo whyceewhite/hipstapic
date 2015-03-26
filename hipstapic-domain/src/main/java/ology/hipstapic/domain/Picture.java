@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -20,9 +22,7 @@ public class Picture implements Serializable {
     @SerializedName("_id")
     private String id;
     private String title;
-    private String lens;
-    private String film;
-    private String flash;
+    private List<String> tags;
     private byte[] image;
 
     public String getId() {
@@ -49,28 +49,23 @@ public class Picture implements Serializable {
         this.image = image;
     }
 
-    public String getLens() {
-        return lens;
+    public boolean addTag(String tag) {
+
+        if (tag == null || tag.isEmpty()) {
+            return false;
+        }
+        if (tags == null) {
+            tags = new ArrayList<String>();
+        }
+        return tags.add(tag);
     }
 
-    public void setLens(String lens) {
-        this.lens = lens;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public String getFilm() {
-        return film;
-    }
-
-    public void setFilm(String film) {
-        this.film = film;
-    }
-
-    public String getFlash() {
-        return flash;
-    }
-
-    public void setFlash(String flash) {
-        this.flash = flash;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String toJson() {

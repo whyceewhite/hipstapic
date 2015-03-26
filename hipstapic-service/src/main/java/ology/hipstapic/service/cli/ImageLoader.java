@@ -2,7 +2,6 @@ package ology.hipstapic.service.cli;
 
 import ology.hipstapic.domain.Picture;
 import ology.hipstapic.service.db.PictureService;
-import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +20,6 @@ public class ImageLoader {
     private static Logger logger = LoggerFactory.getLogger(ImageLoader.class);
 
     public static void main(String... args) {
-
-        logger.debug("Starting...");
 
         ImageLoaderOptions options = new ImageLoaderOptions();
         CmdLineParser parser = new CmdLineParser(options);
@@ -54,13 +51,14 @@ public class ImageLoader {
     private static void run(ImageLoaderOptions options) throws IOException {
 
         Picture picture = new Picture();
-        picture.setFilm(options.getFilm());
-        picture.setFlash(options.getFlash());
-        picture.setLens(options.getLens());
         picture.setTitle(options.getTitle());
         picture.setImage(readFile(options.getFilename()));
+        picture.addTag(options.getFilm());
+        picture.addTag(options.getFlash());
+        picture.addTag(options.getLens());
 
         PictureService.getInstance().save(picture);
+        logger.info("Loaded {}", options.getFilename());
     }
 
     private static byte[] readFile(String filename) throws IOException {

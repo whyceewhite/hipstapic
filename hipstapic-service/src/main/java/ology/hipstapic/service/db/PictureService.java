@@ -9,7 +9,6 @@ import com.mongodb.WriteConcern;
 import com.mongodb.WriteResult;
 import com.mongodb.util.JSON;
 import ology.hipstapic.service.domain.Picture;
-import ology.hipstapic.service.domain.SearchParameters;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

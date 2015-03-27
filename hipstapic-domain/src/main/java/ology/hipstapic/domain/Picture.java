@@ -23,6 +23,7 @@ public class Picture implements Serializable {
     private String id;
     private String title;
     private List<String> tags;
+    private String url;
     private byte[] image;
 
     public String getId() {
@@ -43,6 +44,14 @@ public class Picture implements Serializable {
 
     public byte[] getImage() {
         return image;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setImage(byte[] image) {

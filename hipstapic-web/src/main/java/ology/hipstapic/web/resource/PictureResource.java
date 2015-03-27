@@ -51,8 +51,8 @@ public class PictureResource {
         parameters.setTags(tags);
 
         try {
-            List<Picture> results = PictureService.getInstance().search(parameters);
-            return Response.status(Response.Status.OK).entity(results).build();
+            Long resultCount = PictureService.getInstance().count(parameters);
+            return Response.status(Response.Status.OK).entity(resultCount).build();
         } catch (Exception e) {
             logger.error("An error occurred while searching for pictures.", e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();

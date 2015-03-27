@@ -1,4 +1,4 @@
-feed.app.factory('PictureService',
+hip.app.factory('PictureService',
     ['$http', function($http){
 
         var resourceUrl = 'api/picture';
@@ -9,7 +9,7 @@ feed.app.factory('PictureService',
              * @param   criteria {Object} The criteria for searching. Required.
              */
             search : function(criteria) {
-                var url = feed.asSearchUri(resourceUrl + "/search", criteria);
+                var url = hip.asSearchUri(resourceUrl + "/search", criteria);
                 return $http.get(url);
             },
             /* Searches for recipes containing the given text.
@@ -17,14 +17,14 @@ feed.app.factory('PictureService',
              * @param   criteria {Object} The criteria for searching. Required.
              */
             count : function(criteria) {
-                var url = feed.asSearchUri(resourceUrl + "/search/count", criteria);
+                var url = hip.asSearchUri(resourceUrl + "/search/count", criteria);
                 return $http.get(url);
             }
         };
     }]
 );
 
-feed.app.factory('ErrorService',
+hip.app.factory('ErrorService',
     [ function() {
 
       return {

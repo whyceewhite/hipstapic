@@ -96,3 +96,12 @@ hip.app.controller('SearchController', ['$scope', '$stateParams', '$state', 'Pic
             });
     }
 ]);
+
+hip.app.controller('ErrorController', [ '$scope', 'ErrorService',
+    function($scope, ErrorService) {
+
+        $scope.title = ErrorService.getTitle();
+        $scope.message = ErrorService.getMessage();
+        ErrorService.reset();
+    }
+]);

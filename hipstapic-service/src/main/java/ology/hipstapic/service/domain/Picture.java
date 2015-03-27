@@ -1,4 +1,4 @@
-package ology.hipstapic.domain;
+package ology.hipstapic.service.domain;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -22,8 +22,8 @@ public class Picture implements Serializable {
     @SerializedName("_id")
     private String id;
     private String title;
-    private List<String> tags;
     private String url;
+    private List<String> tags;
     private byte[] image;
 
     public String getId() {

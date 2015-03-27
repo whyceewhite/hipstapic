@@ -1,7 +1,7 @@
 package ology.hipstapic.web.resource;
 
-import ology.hipstapic.domain.Picture;
-import ology.hipstapic.domain.SearchParameters;
+import ology.hipstapic.service.domain.Picture;
+import ology.hipstapic.service.domain.SearchParameters;
 import ology.hipstapic.service.db.PictureService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

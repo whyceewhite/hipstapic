@@ -14,7 +14,6 @@
     </properties>
 
     <modules>
-        <module>hipstapic-domain</module>
         <module>hipstapic-service</module>
         <module>hipstapic-web</module>
     </modules>

@@ -1,4 +1,4 @@
-package ology.hipstapic.domain;
+package ology.hipstapic.service.domain;
 
 import java.util.List;
 

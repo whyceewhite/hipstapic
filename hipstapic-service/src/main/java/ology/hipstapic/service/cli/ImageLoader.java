@@ -1,6 +1,6 @@
 package ology.hipstapic.service.cli;
 
-import ology.hipstapic.domain.Picture;
+import ology.hipstapic.service.domain.Picture;
 import ology.hipstapic.service.db.PictureService;
 import org.kohsuke.args4j.CmdLineParser;
 import org.slf4j.Logger;

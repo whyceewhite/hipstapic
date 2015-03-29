@@ -17,15 +17,15 @@ hip.app.config(
                     templateUrl: 'partials/error.html',
                     controller: 'ErrorController'
                 }).
+                state('pic-search', {
+                    url: '/search?tags&limit&skip',
+                    templateUrl: 'partials/pic-list.html',
+                    controller: 'ListController'
+                }).
                 state('home', {
                     url: '/',
                     templateUrl: 'partials/pic-list.html',
                     controller: 'ListController'
-                }).
-                state('pic-search', {
-                    url: '/pic/search?text&limit&skip',
-                    templateUrl: 'partials/pic-list.html',
-                    controller: 'SearchController'
                 })
                 ;
         }
@@ -118,15 +118,7 @@ hip.asSearchUri = function(resourceUrl, criteria) {
         temp = "";
         value = criteria[key];
         if (!hip.isNone(value)) {
-            if (typeof value === 'object' && value instanceof Array && value.length > 0) {
-                /*
-                * MULTIPLE VALUES SEPARATED BY ","; THIS WAY IS NOT BEING HANDLED BY REST.
-                for (i = 0; i < value.length; i++) {
-                if (i > 0) temp += ",";
-                temp += encodeURIComponent(value[i]);
-                }
-                if (!hip.isEmpty(temp)) temp = key + "=" + temp;
-                */
+            if (typeof value === 'object' && value instanceof Array) {
                 for (i = 0; i < value.length; i++) {
                     if (i > 0) temp += "&";
                     temp += (key + "=" + encodeURIComponent(value[i]));

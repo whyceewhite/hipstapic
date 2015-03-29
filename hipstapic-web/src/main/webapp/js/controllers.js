@@ -5,26 +5,35 @@ hip.app.controller('NavController', ['$scope', '$state', 'PictureService', 'Erro
 
         $scope.search = function () {
             if ($scope.text) {
-                $state.go("pic-search", {text : $scope.text});
-
+                $state.go("pic-search", {tags : $scope.text.split(/\s+/)});
             }
         }
     }
 ]);
 
-hip.app.controller('ListController', ['$scope', '$state', 'PictureService', 'ErrorService',
-    function ($scope, $state, PictureService, ErrorService) {
+hip.app.controller('ListController', ['$scope', '$state', '$stateParams', 'PictureService', 'ErrorService',
+    function ($scope, $state, $stateParams, PictureService, ErrorService) {
 
+        $scope.pichost = "http://localhost:9028/images";
         $scope.results = [];
         $scope.resultsCount = 0;
 
         var pageMinimum = 1,
-            page = pageMinimum,
-            pageSize = 12;
+            page = (hip.isEmpty($stateParams.page)) ? pageMinimum : $stateParams.page,
+            pageSize = (hip.isEmpty($stateParams.pageSize)) ? 24 : $stateParams.pageSize,
+            tags = (hip.isEmpty($stateParams.tags)) ? [] : $stateParams.tags;
+
+        setSearchParams = function() {
+            if (!hip.isEmpty($stateParams.tags)) tags = $stateParams.tags;
+            if (!hip.isEmpty($stateParams.page)) page = $stateParams.page;
+            if (!hip.isEmpty($stateParams.pageSize)) pageSize = $stateParams.pageSize;
+        };
 
         fetchResultsCount = function() {
             PictureService
-                .count({})
+                .count({
+                    tags : tags
+                })
                 .success(function (data, status) {
                     $scope.resultsCount = data;
                 })
@@ -38,6 +47,7 @@ hip.app.controller('ListController', ['$scope', '$state', 'PictureService', 'Err
         fetchPage = function() {
             PictureService
                 .search({
+                    tags : tags,
                     page : page,
                     pageSize : pageSize
                 })
@@ -73,27 +83,10 @@ hip.app.controller('ListController', ['$scope', '$state', 'PictureService', 'Err
             }
         };
 
+        setSearchParams();
         fetchResultsCount();
         fetchPage();
 
-    }
-]);
-
-hip.app.controller('SearchController', ['$scope', '$stateParams', '$state', 'PictureService', 'ErrorService',
-    function ($scope, $stateParams, $state, PictureService, ErrorService) {
-
-        $scope.results = [];
-
-        PictureService
-            .search($stateParams)
-            .success(function (data, status) {
-                $scope.results = data;
-            })
-            .error(function (data, status) {
-                ErrorService.setTitle("An error occurred when searching for pictures.");
-                ErrorService.setMessage(data);
-                $state.go("error");
-            });
     }
 ]);
 

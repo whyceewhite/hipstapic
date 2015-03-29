@@ -1,29 +1,28 @@
 package ology.hipstapic.service.cli;
 
+import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.Option;
 
+import java.util.List;
+
 /**
- * Represents the command line interface options that are available for the
- * image loader function.
+ * <p>
+ * Represents the parameters and arguments that are available for the command line
+ * interface tool.
+ * </p>
  */
 public class ImageLoaderOptions {
 
-    @Option(name="-n", aliases = "--filename", usage = "The absolute path and file name to the image. Required")
+    @Option(name = "-f", aliases = "--filename", required = true, usage = "The file name of the image.")
     private String filename;
 
-    @Option(name="-t", aliases = "--title", usage = "The title of the image. Optional.")
+    @Option(name = "-t", aliases = "--title", usage = "The title of the image.")
     private String title;
 
-    @Option(name="-l", aliases = "--lens", usage = "The lens used for this image. Optional.")
-    private String lens;
+    @Option(name = "-tag", aliases = "--tag", usage = "Tags and key words to apply to the image.")
+    private List<String> tags;
 
-    @Option(name="-fi", aliases = "--film", usage = "The film used for this image. Optional.")
-    private String film;
-
-    @Option(name="-fl", aliases = "--flash", usage = "The flash used for this image. Optional.")
-    private String flash;
-
-    @Option(name="-h", aliases = "--help")
+    @Option(name = "-h", aliases = "--help")
     private boolean help;
 
     public String getFilename() {
@@ -42,28 +41,12 @@ public class ImageLoaderOptions {
         this.title = title;
     }
 
-    public String getLens() {
-        return lens;
+    public List<String> getTags() {
+        return tags;
     }
 
-    public void setLens(String lens) {
-        this.lens = lens;
-    }
-
-    public String getFilm() {
-        return film;
-    }
-
-    public void setFilm(String film) {
-        this.film = film;
-    }
-
-    public String getFlash() {
-        return flash;
-    }
-
-    public void setFlash(String flash) {
-        this.flash = flash;
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public boolean isHelp() {

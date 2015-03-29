@@ -22,9 +22,8 @@ public class Picture implements Serializable {
     @SerializedName("_id")
     private String id;
     private String title;
-    private String url;
+    private String filename;
     private List<String> tags;
-    private byte[] image;
 
     public String getId() {
         return id;
@@ -42,20 +41,12 @@ public class Picture implements Serializable {
         this.title = title;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getFilename() {
+        return filename;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public boolean addTag(String tag) {
@@ -85,6 +76,10 @@ public class Picture implements Serializable {
     public static Picture toObject(String json) throws JsonSyntaxException {
         Gson gson = new Gson();
         return gson.fromJson(json, Picture.class);
+    }
+
+    public String toString() {
+        return toJson();
     }
 
 }

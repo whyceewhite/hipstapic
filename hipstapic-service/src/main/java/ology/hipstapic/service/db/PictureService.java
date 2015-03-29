@@ -40,6 +40,14 @@ public class PictureService {
         return service;
     }
 
+    /**
+     * <p>
+     * If the given picture entry is new then it is created and saved to the
+     * database. Otherwise, the entry is updated.
+     * </p>
+     *
+     * @param   picture Creates or updates the given picture entry.
+     */
     public void save(Picture picture) {
 
         boolean isNew = false;
@@ -58,6 +66,18 @@ public class PictureService {
         logger.debug("The save result for picture id #{}: {}", picture.getId(), result);
     }
 
+    /**
+     * <p>
+     * Searches the items that match the given search parameters. The number
+     * and page of items returned is dictated by the page and pageSize values
+     * in the parameters.
+     * </p>
+     *
+     * @param   parameters The search parameters for finding the desired result
+     *          set. Required.
+     * @return  The items matching the search criteria. A maximum number of
+     *          results returned is determined by the pageSize value.
+     */
     public List<Picture> search(SearchParameters parameters) {
 
         logger.debug("Search parameters: {}", parameters);
@@ -95,7 +115,7 @@ public class PictureService {
      * </p>
      *
      * @param   parameters The search parameters for finding the desired result
-     *          set. The limit and skip values are ignored
+     *          set. The page and pageSize values are ignored.
      * @return  The number of items matching the search parameters.
      */
     public long count(SearchParameters parameters) {
@@ -120,10 +140,14 @@ public class PictureService {
         if (parameters != null && parameters.getTags() != null && !parameters.getTags().isEmpty()) {
             BasicDBList tagQueryList = new BasicDBList();
             for (String tag : parameters.getTags()) {
-                tagQueryList.add(tag);
+                if (tag != null && !tag.isEmpty()) tagQueryList.add(tag);
             }
-            query.put("tags", new BasicDBObject("$all", tagQueryList));
+            if (!tagQueryList.isEmpty()) {
+                query.put("tags", new BasicDBObject("$all", tagQueryList));
+            }
         }
+
+        logger.debug("Query object: {}", query);
 
         return query;
     }

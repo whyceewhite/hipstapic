@@ -16,6 +16,7 @@
     <modules>
         <module>hipstapic-service</module>
         <module>hipstapic-web</module>
+        <module>hipstapic-cli</module>
     </modules>
 
     <dependencyManagement>

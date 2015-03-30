@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -23,6 +24,9 @@ public class Picture implements Serializable {
     private String id;
     private String title;
     private String filename;
+    private String make;
+    private String model;
+    private Date createTimestamp;
     private List<String> tags;
 
     public String getId() {
@@ -47,6 +51,30 @@ public class Picture implements Serializable {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public String getMake() {
+        return make;
+    }
+
+    public void setMake(String make) {
+        this.make = make;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Date getCreateTimestamp() {
+        return createTimestamp;
+    }
+
+    public void setCreateTimestamp(Date createTimestamp) {
+        this.createTimestamp = createTimestamp;
     }
 
     public boolean addTag(String tag) {

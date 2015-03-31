@@ -1,8 +1,8 @@
-<div class="row">
-    <div ng-repeat="pic in results" class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
-        <img src="{{pichost}}/{{pic.filename}}" height="250" width="250" alt="{{pic.filename}}">
-        <!--
-        <img src="http://placehold.it/200"/>
-        -->
-    </div>
+<div ng-repeat="pic in results" class="picture">
+    <img src="{{pichost}}/{{pic.filename}}" height="250" width="250" alt="{{pic.filename}}">
+    <div class="title">{{pic.title}}</div>
+    <!--
+    <img src="http://placehold.it/250" height="250" width="250" alt="test">
+    <div class="title">Muir Lens, Rainbow Film, Berry Pop Flash</div>
+    -->
 </div>

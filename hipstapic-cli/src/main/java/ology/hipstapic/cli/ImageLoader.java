@@ -31,6 +31,9 @@ public class ImageLoader {
     private static final String EXIF_MAKE = "Make";
     private static final String EXIF_MODEL = "Model";
 
+    private int itemTotal;
+    private int failedItemTotal;
+
     public static void main(String... args) {
 
         ImageLoaderOptions options = new ImageLoaderOptions();
@@ -84,13 +87,21 @@ public class ImageLoader {
         } else {
             loader.load(new File(options.getFilename()), options.isPrintExif());
         }
+
+        logger.info("Finished. {} items were sent for processing; {} items failed processing.",
+                loader.getItemTotal(), loader.getFailedItemTotal());
     }
 
     private void load(File file, boolean printExif) {
 
+        itemTotal++;
         logger.info("Loading {}", file.getAbsolutePath());
         Picture picture = readExif(file, printExif);
-        PictureService.getInstance().save(picture);
+        if (picture == null) {
+            failedItemTotal++;
+        } else {
+            PictureService.getInstance().save(picture);
+        }
     }
 
     private Picture readExif(File file, boolean isPrintExif) {
@@ -120,6 +131,7 @@ public class ImageLoader {
                         picture.setMake(tag.getDescription());
                         break;
                     case EXIF_SOFTWARE:
+                        picture.setTitle(tag.getDescription());
                         parseSoftware(picture, tag.getDescription());
                         break;
                     case EXIF_CREATE_DATE:
@@ -181,5 +193,13 @@ public class ImageLoader {
         }
         return buffer.array();
 
+    }
+
+    private int getItemTotal() {
+        return itemTotal;
+    }
+
+    private int getFailedItemTotal() {
+        return failedItemTotal;
     }
 }

@@ -1,7 +1,21 @@
+.navbar-default .navbar-nav > li > a.app-title {
+    margin-left: 0px;
+    padding-left: 0px;
+    font-family: 'Sansita One', cursive;
+    font-size: 40px;
+}
+.navbar-default .navbar-nav > li > input.app-search {
+    margin-top: 8px;
+}
+div.app-content {
+    margin: 0px 10px;
+}
 
 div.picture {
     margin: 5px 0px 5px 5px;
+    /*
     border: 1px solid #000;
+    */
     width: 255px;
     text-align: center;
     display: inline-block;

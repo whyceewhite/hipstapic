@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Sansita+One" type="text/css">
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/app.css">
 
@@ -27,11 +28,11 @@
         <ul class="nav navbar-nav">
             <li><a ui-sref="home" class="app-title">hipstapic</a></li>
             <li>
-                <input type="text" class="form-control" ng-model="text" wh-enterup="search()" placeholder="Press to search">
+                <input type="text" class="app-search form-control" ng-model="text" wh-enterup="search()" size="50" placeholder="Press to search">
             </li>
         </ul>
     </div>
 </nav>
-<div id="content" ui-view></div>
+<div id="content" class="app-content" ui-view></div>
 </body>
 </html>

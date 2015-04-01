@@ -4,14 +4,25 @@
 
 1. Get Git.
 
-1. Install a web container such as JBoss.
+1. [Install Brew](http://brew.sh/).
+
+    Or, if Brew is already installed, update it.
 
     ```
     $ brew update
+    ```
+
+1. Install a web container such as JBoss's WildFly AS.
+
+    ```
     $ brew install wildfly-as
     ```
 
 1. [Install MongoDB](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/).
+
+    ```
+    $ brew install mongodb
+    ```
 
 1. [Install Node.JS](https://nodejs.org/download/).
 
@@ -29,23 +40,45 @@
 
 ## SETUP
 
+### Install Javascript Libs for hipstapic-web via Bower
+
 The javascript libraries for the hipstapic-web component are managed through Bower. When initially setting up the hipstapic-web project, you will need to issue a `bower install` command to obtain the libraries.
 
     $ cd hipstapic-web/src/main/webapp
     $ bower install
 
+### Configure DEBUG Logging for WildFly AS
+
+Modify the `wildfly-as/libexec/standalone/configuration/standalone.xml` file. In the `urn:jboss:domain:logging:2.0` subsystem, change the handlers' level to DEBUG.
+Add a logger entry for the projects by specifying the `ology` package.
+
+    <logger category="ology">
+       <level name="DEBUG"/>
+    </logger>
+
+
 
 ## RUNNING THE APP FOR DEVELOPMENT USING NODEJS
 
-1. Change into the project's webapp directory.
+1. Change into the project's `webapp` directory.
 
+    ```
     $ cd hipstapic/hipstapic-web/src/main/webapp
+    ```
 
 1. Start Node.js.
 
-    $ npm start
+    If starting for the first time then run the npm install to grab the dependencies referenced in the package.json file.
 
-1. Go to http://localhost:9000
+    ```
+    $ sudo npm install
+    ```
+
+    ```
+    $ npm start
+    ```
+
+1. Go to http://localhost:9000.
 
 
 ## RUNNING THE APP FOR DEVELOPMENT USING JBOSS
@@ -53,26 +86,18 @@ The javascript libraries for the hipstapic-web component are managed through Bow
 1. Start mongodb.
 
     ```
-    $ sudo mongod
+    $ sudo mongod --config /usr/local/etc/mongod.conf
     ```
 
 1. Start JBoss.
 
     ```
-    $ sudo /usr/local/jboss/bin/standalone.sh
-
-    # For Wildfly:
-
     $ sudo /usr/local/opt/wildfly-as/libexec/bin/standalone.sh
     ```
 
 1. Copy the WAR to the JBoss deployment directory to hot deploy it.
 
     ```
-    $ sudo cp hipstapic/hipstapic-web/target/hipstapic-web.war /usr/local/jboss/standalone/deployments
-
-    # For Wildfly:
-
     $ sudo cp hipstapic/hipstapic-web/target/hipstapic-web.war /usr/local/opt/wildfly-as/libexec/standalone/deployments
 
     ```
@@ -80,10 +105,6 @@ The javascript libraries for the hipstapic-web component are managed through Bow
     Monitor the log to determine the status of the deployment by tailing the `server.log`:
 
     ```
-    $ tail -f /usr/local/jboss/standalone/log/server.log
-
-    # For Wildfly:
-
     $ tail -f /usr/local/opt/wildfly-as/libexec/standalone/log/server.log
     ```
 

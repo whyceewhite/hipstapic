@@ -17,6 +17,7 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,8 @@ public class ImageLoader {
 
     private int itemTotal;
     private int failedItemTotal;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+    private ImageFileFilter fileFilter = new ImageFileFilter();
 
     public static void main(String... args) {
 
@@ -81,7 +84,9 @@ public class ImageLoader {
             if (directory.exists() && directory.isDirectory()) {
                 File[] files = directory.listFiles();
                 for (File file : files) {
-                    loader.load(file, options.isPrintExif());
+                    if (loader.accept(file)) {
+                        loader.load(file, options.isPrintExif());
+                    }
                 }
             }
         } else {
@@ -90,6 +95,10 @@ public class ImageLoader {
 
         logger.info("Finished. {} items were sent for processing; {} items failed processing.",
                 loader.getItemTotal(), loader.getFailedItemTotal());
+    }
+
+    private boolean accept(File file) {
+        return fileFilter.accept(file);
     }
 
     private void load(File file, boolean printExif) {
@@ -135,6 +144,11 @@ public class ImageLoader {
                         parseSoftware(picture, tag.getDescription());
                         break;
                     case EXIF_CREATE_DATE:
+                        try {
+                            picture.setCreateTimestamp(dateFormatter.parse(tag.getDescription()));
+                        } catch (Exception e) {
+                            logger.error("Could not parse the date/time {}; skip setting the createTimestamp. {}", tag.getDescription(), e);
+                        }
                         break;
                 }
             }

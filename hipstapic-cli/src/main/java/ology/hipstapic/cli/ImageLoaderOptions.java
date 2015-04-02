@@ -16,9 +16,6 @@ public class ImageLoaderOptions {
     @Option(name = "-d", aliases = "--directory", forbids = {"-f"}, usage = "Loads all files in the given directory.")
     private String directory;
 
-    @Option(name = "-t", aliases = "--title", usage = "The title of the image.")
-    private String title;
-
     @Option(name = "-p", aliases = "--print-exif", usage = "Displays the EXIF information associated with the image file.")
     private boolean printExif;
 
@@ -39,14 +36,6 @@ public class ImageLoaderOptions {
 
     public void setDirectory(String directory) {
         this.directory = directory;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public boolean isPrintExif() {

@@ -92,7 +92,9 @@ public class PictureService {
                 (parameters.getPage() - 1) * limit :
                 DEFAULT_SKIP;
 
-        DBCursor cursor = collection.find(createSearchObject(parameters)).skip(skip).limit(limit);
+        DBCursor cursor = collection.find(createSearchObject(parameters))
+                .sort(new BasicDBObject("createTimestamp", 1))
+                .skip(skip).limit(limit);
         Iterator<DBObject> iterator = cursor.iterator();
         int resultCount = 0;
 

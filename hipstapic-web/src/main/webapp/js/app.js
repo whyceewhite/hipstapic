@@ -18,7 +18,7 @@ hip.app.config(
                     controller: 'ErrorController'
                 }).
                 state('pic-search', {
-                    url: '/search?tags&limit&skip',
+                    url: '/search?tags&page&pageSize',
                     templateUrl: 'partials/pic-list.html',
                     controller: 'ListController'
                 }).

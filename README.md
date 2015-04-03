@@ -58,7 +58,7 @@ Add a logger entry for the projects by specifying the `ology` package.
 
 
 
-## RUNNING THE APP FOR DEVELOPMENT USING NODEJS
+## RUNNING THE WEB APP FOR DEVELOPMENT USING NODEJS
 
 1. Change into the project's `webapp` directory.
 
@@ -81,13 +81,22 @@ Add a logger entry for the projects by specifying the `ology` package.
 1. Go to http://localhost:9000.
 
 
-## RUNNING THE APP FOR DEVELOPMENT USING JBOSS
+## RUNNING THE WEB APP FOR DEVELOPMENT USING JBOSS
 
 1. Start mongodb.
 
     ```
     $ sudo mongod --config /usr/local/etc/mongod.conf
     ```
+
+1. To start a simple web server for hosting the images, then go to the directory where the images are located and run:
+
+    ```
+    $ python -m SimpleHTTPServer <port>
+    ```
+
+    Where `<port>` is a port that is not being used (i.e., 9028).
+
 
 1. Start JBoss.
 
@@ -113,11 +122,3 @@ Add a logger entry for the projects by specifying the `ology` package.
     ```
     http://localhost:8080/hipstapic-web
     ```
-
-1. To start a simple web server for hosting the images, then go to the directory where the images are located and run:
-
-    ```
-    $ python -m SimpleHTTPServer <port>
-    ```
-
-    Where `<port>` is a port that is not being used (i.e., 9028).

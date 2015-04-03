@@ -7,6 +7,9 @@ import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
+import com.mongodb.DBObject;
+import ology.hipstapic.service.domain.Picture;
+import org.mongodb.morphia.Morphia;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +43,7 @@ public class DatabaseClient {
     private String databaseHost;
     private String databaseName;
     private Integer databasePort;
+    private Morphia mapper;
 
     static {
         databaseClient = new DatabaseClient();
@@ -49,6 +53,7 @@ public class DatabaseClient {
 
         loadProperties();
         initializeMongoClient();
+        initializeMapper();
     }
 
     /**
@@ -58,6 +63,30 @@ public class DatabaseClient {
      */
     static DB getDB() {
         return databaseClient.getMongoDB();
+    }
+
+    /**
+     * Converts the DBObject instance to an instance with type specified by the
+     * entityClass parameter.
+     *
+     * @param   entityClass The class that the returned instance will be.
+     *          Required.
+     * @param   dbObject The DBObject instance that is to be converted into its
+     *          representative entityClass type. Required.
+     * @return  An instance of type T that contains the values from dbObject.
+     */
+    static <T> T fromDBObject(final Class<T> entityClass, final DBObject dbObject) {
+        return databaseClient.mapper.fromDBObject(entityClass, dbObject);
+    }
+
+    /**
+     * Converts a pojo instance into a DBObject instance.
+     *
+     * @param   entity The instance to convert into a DBObject. Required.
+     * @return  The DBObject representation of the entity parameter.
+     */
+    static DBObject toDBObject(final Object entity) {
+        return databaseClient.mapper.toDBObject(entity);
     }
 
     /**
@@ -111,6 +140,16 @@ public class DatabaseClient {
             logger.error("", e);
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Initializes the MongoDB object mapper and adds project entities that are
+     * included in the mapping.
+     */
+    private void initializeMapper() {
+
+        mapper = new Morphia();
+        mapper.map(Picture.class);
     }
 
     /**

@@ -145,7 +145,7 @@ public class ImageLoader {
                         break;
                     case EXIF_CREATE_DATE:
                         try {
-                            picture.setCreateTimestamp(dateFormatter.parse(tag.getDescription()));
+                            picture.setCreateDate(dateFormatter.parse(tag.getDescription()));
                         } catch (Exception e) {
                             logger.error("Could not parse the date/time {}; skip setting the createTimestamp. {}", tag.getDescription(), e);
                         }

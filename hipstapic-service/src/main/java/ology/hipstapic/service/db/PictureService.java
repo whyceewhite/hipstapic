@@ -7,7 +7,6 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.WriteConcern;
 import com.mongodb.WriteResult;
-import com.mongodb.util.JSON;
 import ology.hipstapic.service.domain.Picture;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -57,8 +56,8 @@ public class PictureService {
             picture.setId(new ObjectId().toString());
             isNew = true;
         }
-        DBObject dbObj = (DBObject) JSON.parse(picture.toJson());
 
+        DBObject dbObj = DatabaseClient.toDBObject(picture);
         result = isNew ?
                 collection.insert(dbObj, WriteConcern.ACKNOWLEDGED) :
                 collection.update(new BasicDBObject("_id", picture.getId()), dbObj);
@@ -84,6 +83,7 @@ public class PictureService {
 
         ArrayList<Picture> results = new ArrayList<>();
 
+        int resultCount = 0;
         int limit = (parameters.getPageSize() != null && parameters.getPage() > 0) ?
                 parameters.getPageSize() :
                 DEFAULT_LIMIT;
@@ -93,15 +93,15 @@ public class PictureService {
                 DEFAULT_SKIP;
 
         DBCursor cursor = collection.find(createSearchObject(parameters))
-                .sort(new BasicDBObject("createTimestamp", 1))
+                .sort(new BasicDBObject("createDate", 1))
                 .skip(skip).limit(limit);
+
         Iterator<DBObject> iterator = cursor.iterator();
-        int resultCount = 0;
 
         while (iterator.hasNext()) {
-            String picJson = iterator.next().toString();
-            logger.trace("Search result {}: {}", ++resultCount, picJson);
-            results.add(Picture.toObject(picJson));
+            BasicDBObject picDbObj = (BasicDBObject)iterator.next();
+            logger.debug("Search result {}: {}", ++resultCount, picDbObj);
+            results.add(DatabaseClient.fromDBObject(Picture.class, picDbObj));
         }
         cursor.close();
 

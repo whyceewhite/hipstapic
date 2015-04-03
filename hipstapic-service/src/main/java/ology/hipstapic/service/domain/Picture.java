@@ -1,8 +1,5 @@
 package ology.hipstapic.service.domain;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,23 +7,27 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.annotations.SerializedName;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 /**
+ * <p>
+ * Represents an image in hipstapic.
+ * </p>
+ * TODO: Index on tags
  */
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
+@Entity("picture")
 public class Picture implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @SerializedName("_id")
+    @Id
     private String id;
     private String title;
     private String filename;
     private String make;
     private String model;
-    private Date createTimestamp;
+    private Date createDate;
     private List<String> tags;
 
     public String getId() {
@@ -69,12 +70,12 @@ public class Picture implements Serializable {
         this.model = model;
     }
 
-    public Date getCreateTimestamp() {
-        return createTimestamp;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateTimestamp(Date createTimestamp) {
-        this.createTimestamp = createTimestamp;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public boolean addTag(String tag) {
@@ -96,18 +97,8 @@ public class Picture implements Serializable {
         this.tags = tags;
     }
 
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
-
-    public static Picture toObject(String json) throws JsonSyntaxException {
-        Gson gson = new Gson();
-        return gson.fromJson(json, Picture.class);
-    }
-
     public String toString() {
-        return toJson();
+        return new Gson().toJson(this);
     }
 
 }

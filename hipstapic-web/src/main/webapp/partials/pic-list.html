@@ -1,8 +1,27 @@
-<div ng-repeat="pic in results" class="picture">
-    <img src="{{pichost}}/{{pic.filename}}" height="250" width="250" alt="{{pic.filename}}">
-    <div class="title">{{pic.title}} [{{pic.createDate | date : 'short' }}]</div>
-    <!--
-    <img src="http://placehold.it/250" height="250" width="250" alt="test">
-    <div class="title">Muir Lens, Rainbow Film, Berry Pop Flash</div>
-    -->
+<div class="total-results" ng-show="resultsCount == 0" ng-cloak>
+    <span ng-if="tags.length > 0">Your search on <span class="keywords">"{{tags.join(' ')}}"</span> did not match any images.</span>
+    <span ng-if="tags.length == 0">No images found.</span>
 </div>
+<div class="gallery" ng-show="resultsCount > 0">
+    <div class="total-results">
+        {{getPageMinCount()}} - {{getPageMaxCount()}} of {{resultsCount}}
+        <span ng-if="tags.length > 0"> for <span class="keywords">"{{tags.join(' ')}}"</span></span>
+    </div>
+    <div ng-repeat="pic in results" class="picture">
+        <img src="{{pichost}}/{{pic.filename}}" height="250" width="250" alt="{{pic.filename}}">
+        <div class="title">{{pic.title}}</div>
+        <div class="title">[{{pic.createDate | date : 'short' }}]</div>
+    </div>
+    <div>
+        <button class="btn btn-primary" ng-disabled="!canGoPrevious()" ng-click="previous()">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            Previous
+        </button>
+        <button class="btn btn-primary" ng-disabled="!canGoNext()" ng-click="next()">
+            Next
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        </button>
+        <span class="paging">Page {{page}} of {{totalPages()}}</span>
+    </div>
+</div>
+

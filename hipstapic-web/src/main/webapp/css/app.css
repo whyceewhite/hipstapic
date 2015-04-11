@@ -11,18 +11,32 @@ div.app-content {
     margin: 0px 10px;
 }
 
+div.gallery {
+    margin-bottom: 10px;
+}
 div.picture {
     margin: 5px 0px 5px 5px;
-    /*
-    border: 1px solid #000;
-    */
     width: 255px;
     text-align: center;
     display: inline-block;
 }
 div.title {
     text-align: center;
+    font-size: 80%;
     font-weight: normal;
     width: 240px;
     margin: 5px;
+}
+span.paging {
+    margin-left: 10px;
+    color: green;
+}
+div.total-results {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 90%;
+}
+.keywords {
+    color: #CC6600;
+    font-weight: bold;
 }

@@ -1,27 +1,34 @@
-<div class="total-results" ng-show="resultsCount == 0" ng-cloak>
+<div class="page-results" ng-show="resultsCount == 0" ng-cloak>
     <span ng-if="tags.length > 0">Your search on <span class="keywords">"{{tags.join(' ')}}"</span> did not match any images.</span>
     <span ng-if="tags.length == 0">No images found.</span>
 </div>
 <div class="gallery" ng-show="resultsCount > 0">
-    <div class="total-results">
+    <div class="page-results">
         {{getPageMinCount()}} - {{getPageMaxCount()}} of {{resultsCount}}
         <span ng-if="tags.length > 0"> for <span class="keywords">"{{tags.join(' ')}}"</span></span>
     </div>
-    <div ng-repeat="pic in results" class="picture">
+    <div ng-repeat="pic in results" class="image-box">
         <img src="{{pichost}}/{{pic.filename}}" height="250" width="250" alt="{{pic.filename}}">
-        <div class="title">{{pic.title}}</div>
-        <div class="title">[{{pic.createDate | date : 'short' }}]</div>
+        <div class="image-caption">{{pic.title}}</br>[ {{pic.createDate | date : 'short' }} ]</div>
     </div>
-    <div>
-        <button class="btn btn-primary" ng-disabled="!canGoPrevious()" ng-click="previous()">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            Previous
-        </button>
-        <button class="btn btn-primary" ng-disabled="!canGoNext()" ng-click="next()">
-            Next
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        </button>
-        <span class="paging">Page {{page}} of {{totalPages()}}</span>
-    </div>
+</div>
+<div class="page-navigation" ng-show="totalPages > 1">
+    <button ng-disable="isOnFirstPage()" ng-click="first()" class="btn btn-primary" title="First Page">
+        1 <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+    </button>
+    <button ng-disable="!canGoPrevious()" ng-click="previous()" class="btn btn-primary" title="Previous Page">
+        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+    </button>
+    <span ng-repeat="f in pageRange">
+        <button ng-if="f.isCurrentPage" class="btn btn-default" disabled="true">{{f.pageNumber}}</button>
+        <button ng-if="!f.isCurrentPage" class="btn btn-primary" ng-click="gotoPage(f.pageNumber)">{{f.pageNumber}}</button>
+    </span>
+
+    <button ng-disable="!canGoNext()" ng-click="next()" class="btn btn-primary" title="Next Page">
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+    </button>
+    <button ng-disable="isOnLastPage()" ng-click="last()" class="btn btn-primary" title="Last Page">
+        <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span> {{totalPages}}
+    </button>
 </div>
 
